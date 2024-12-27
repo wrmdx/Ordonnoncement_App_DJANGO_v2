@@ -1,12 +1,9 @@
 import os.path
-import os
-import random
+
 import copy
-from .tests import MILP_None,MILP_JOB
-from .tests5 import Jackson
+from .utils.functions import MILP_None,MILP_JOB, Jackson
 from django.shortcuts import render,redirect
-import numpy as np
-import matplotlib.pyplot as plt
+
 
 
 
@@ -216,7 +213,7 @@ def gantt(N, r, c, crit, cont, R, d, T, Np, NG, Pm):
     ax.set_xlabel('Time')
     ax.set_title('Gantt Chart')
     Cmax = max(c[-1, :])
-    ax.text(max(c[-1, :]) / 3, (2 / 5) * max(c[-1, :]), f'Cmax={int(Cmax)}', color='black')
+    # ax.text(max(c[-1, :]) / 3, (2 / 5) * max(c[-1, :]), f'Cmax={int(Cmax)}', color='black')
     labels = []
     for i in range(len(M[:, 0])):
         ticks.append(K * i + 1)
@@ -898,7 +895,7 @@ def MILPjobgantt(J, Ol, pl, op, M):
 
     ax.set_xlabel('time')
     ax.set_title('Gantt Chart')
-    ax.text(Cmax / 3, (2 / 5) * Cmax, f'Cmax={int(Cmax)}', color='black')
+    # ax.text(Cmax / 3, (2 / 5) * Cmax, f'Cmax={int(Cmax)}', color='black')
     labels = []
     for i in range(M):
         ticks.append(K * i + 1)

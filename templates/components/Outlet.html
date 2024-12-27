@@ -13,11 +13,11 @@
     {% block extra_css %}{% endblock %}
 </head>
 <body>
-    {% include 'navbar.html' %}
+    {% include 'components/navbar.html' %}
     <main>
         {% block content %}{% endblock %}
     </main>
-    {% include 'footer.html' %}
+    {% include 'components/footer.html' %}
     {% bootstrap_javascript %}
     {% block extra_js %}{% endblock %}
 </body>

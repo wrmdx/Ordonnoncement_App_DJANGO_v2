@@ -2,7 +2,6 @@
 
 {% block content %}
 <style>
-    /* Navbar Base Styles */
     .navbar {
         padding: 18px 0;
         transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
@@ -11,7 +10,6 @@
         border-bottom: 1px solid rgba(255, 255, 255, 0.1);
     }
 
-    /* Brand Styling */
     .navbar-brand {
         font-size: 2rem;
         font-weight: 700;
@@ -186,7 +184,7 @@
         <div class="collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
                 <li class="nav-item">
-                    <a class="nav-link" href="#about">About</a>
+                    <a class="nav-link" href="{% url 'home_page' %}#about">About</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="{% url 'home_page' %}#services">Services</a>
@@ -197,7 +195,7 @@
 </nav>
 
 <script>
-    // Enhanced scroll behavior
+
     window.addEventListener('scroll', function() {
         const navbar = document.querySelector('.navbar');
         const scrollPosition = window.scrollY;
@@ -209,7 +207,6 @@
         }
     });
 
-    // Add active class to current nav item
     document.addEventListener('DOMContentLoaded', function() {
         const currentLocation = location.href;
         const menuItems = document.querySelectorAll('.nav-link');

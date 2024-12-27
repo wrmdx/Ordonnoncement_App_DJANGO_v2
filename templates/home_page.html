@@ -1,4 +1,4 @@
-{% extends 'Outlet.html' %}
+{% extends 'components/Outlet.html' %}
 {% load static %}
 {% load django_bootstrap5 %}
 
@@ -6,6 +6,13 @@
 
 {% block extra_css %}
 <style>
+    :root {
+        --primary: #2b4c7e;
+        --secondary: #1a365d;
+        --accent: #4299e1;
+        --text-light: #ffffff;
+    }
+
     /* Hero Section */
     .hero {
         min-height: 100vh;
@@ -13,6 +20,7 @@
         background-position: center;
         position: relative;
         padding: 120px 0;
+        overflow: hidden;
     }
 
     .hero::before {
@@ -22,176 +30,199 @@
         left: 0;
         right: 0;
         bottom: 0;
-        background: linear-gradient(135deg, rgba(55, 81, 126, 0.9) 0%, rgba(42, 63, 98, 0.85) 100%);
+        background: linear-gradient(135deg, rgba(43, 76, 126, 0.95) 0%, rgba(26, 54, 93, 0.9) 100%);
+        backdrop-filter: blur(5px);
     }
 
     .hero-content {
         position: relative;
         z-index: 1;
-        color: #ffffff;
+        color: var(--text-light);
     }
 
     .hero-title {
-        font-size: 3.5rem;
-        font-weight: 700;
+        font-size: 4rem;
+        font-weight: 800;
         margin-bottom: 1.5rem;
-        animation: fadeInUp 1s ease;
+        animation: slideInUp 1.2s ease;
+        text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+        letter-spacing: -0.5px;
     }
 
     .hero-subtitle {
-        font-size: 1.25rem;
-        margin-bottom: 2rem;
-        animation: fadeInUp 1s ease 0.2s;
+        font-size: 1.5rem;
+        margin-bottom: 2.5rem;
+        animation: slideInUp 1.2s ease 0.3s;
         opacity: 0;
         animation-fill-mode: forwards;
+        font-weight: 300;
     }
 
     .cta-button {
         display: inline-block;
-        padding: 15px 35px;
-        background: #ffffff;
-        color: #37517e;
+        padding: 18px 40px;
+        background: var(--accent);
+        color: var(--text-light);
         border-radius: 50px;
         font-weight: 600;
         text-decoration: none;
-        transition: all 0.3s ease;
-        animation: fadeInUp 1s ease 0.4s;
+        transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        animation: slideInUp 1.2s ease 0.6s;
         opacity: 0;
         animation-fill-mode: forwards;
+        box-shadow: 0 4px 15px rgba(66, 153, 225, 0.4);
     }
 
     .cta-button:hover {
-        background: transparent;
-        color: #ffffff;
-        border: 2px solid #ffffff;
+        background: var(--text-light);
+        color: var(--accent);
         transform: translateY(-3px);
+        box-shadow: 0 6px 20px rgba(66, 153, 225, 0.6);
     }
 
     /* Services Section */
     .services {
-        padding: 100px 0;
-        background: #f8f9fa;
+        padding: 120px 0;
+        background: #f8fafc;
     }
 
     .section-header {
-        margin-bottom: 60px;
+        margin-bottom: 80px;
     }
 
     .section-title {
-        color: #37517e;
-        font-size: 2.5rem;
-        font-weight: 700;
-        margin-bottom: 20px;
+        color: var(--primary);
+        font-size: 3rem;
+        font-weight: 800;
+        margin-bottom: 25px;
+        position: relative;
+        display: inline-block;
     }
 
-    .section-divider {
-        width: 60px;
-        height: 3px;
-        background: #37517e;
-        margin: 0 auto;
+    .section-title::after {
+        content: '';
+        position: absolute;
+        bottom: -15px;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 80px;
+        height: 4px;
+        background: var(--accent);
+        border-radius: 2px;
     }
 
     .service-card {
-        background: #ffffff;
-        padding: 40px 30px;
-        border-radius: 15px;
+        background: var(--text-light);
+        padding: 50px 35px;
+        border-radius: 20px;
         text-align: center;
-        transition: all 0.3s ease;
-        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+        height: 100%;
+        border: 1px solid rgba(226, 232, 240, 0.8);
     }
 
     .service-card:hover {
-        transform: translateY(-10px);
-        box-shadow: 0 15px 35px rgba(55, 81, 126, 0.15);
+        transform: translateY(-12px);
+        box-shadow: 0 20px 40px rgba(66, 153, 225, 0.15);
+        border-color: var(--accent);
     }
 
     .service-icon {
-        font-size: 2.5rem;
-        color: #37517e;
-        margin-bottom: 20px;
+        font-size: 3rem;
+        color: var(--accent);
+        margin-bottom: 25px;
+        transition: all 0.4s ease;
+    }
+
+    .service-card:hover .service-icon {
+        transform: scale(1.1);
+        color: var(--primary);
+    }
+
+    .service-card h3 {
+        color: var(--primary);
+        font-size: 1.5rem;
+        font-weight: 700;
+        margin-bottom: 15px;
+    }
+
+    .service-card p {
+        color: #64748b;
+        font-size: 1.1rem;
+        line-height: 1.6;
     }
 
     /* Team Section */
     .team {
-        padding: 100px 0;
-        background: #ffffff;
+        padding: 120px 0;
+        background: var(--text-light);
     }
 
     .team-card {
-        background: #ffffff;
-        border-radius: 15px;
+        background: var(--text-light);
+        border-radius: 20px;
         overflow: hidden;
-        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
-        transition: all 0.3s ease;
-        margin-bottom: 30px;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+        transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        margin-bottom: 40px;
+        border: 1px solid rgba(226, 232, 240, 0.8);
+        position: relative;
     }
 
-    .team-card:hover {
-        transform: translateY(-10px);
-        box-shadow: 0 15px 35px rgba(55, 81, 126, 0.15);
-    }
-
-    .team-image {
-        width: 120px;
+    .team-card::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
         height: 120px;
-        border-radius: 50%;
-        margin: -60px auto 20px;
-        overflow: hidden;
-        border: 5px solid #ffffff;
-        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
-    }
-
-    .team-image img {
-        width: 100%;
-        height: 100%;
-        object-fit: cover;
+        background: linear-gradient(135deg, var(--primary) 0%, var(--accent) 100%);
     }
 
     .team-info {
-        padding: 20px 30px 30px;
+        padding: 85px 30px 30px;
         text-align: center;
+        position: relative;
     }
 
     .team-name {
-        color: #37517e;
-        font-size: 1.25rem;
-        font-weight: 600;
-        margin-bottom: 5px;
+        color: white;
+        font-size: 1.4rem;
+        font-weight: 700;
+        margin-bottom: 8px;
     }
 
     .team-position {
-        color: #6c757d;
-        font-size: 0.9rem;
-        margin-bottom: 15px;
+        color: #64748b;
+        font-size: 1rem;
+        margin-bottom: 20px;
+        font-weight: 500;
     }
 
     .team-social {
         display: flex;
         justify-content: center;
-        gap: 15px;
+        gap: 20px;
     }
 
     .team-social a {
-        color: #37517e;
-        font-size: 1.1rem;
-        transition: all 0.3s ease;
+        color: var(--accent);
+        font-size: 1.2rem;
+        transition: all 0.4s ease;
+        width: 40px;
+        height: 40px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 50%;
+        background: #f8fafc;
     }
 
     .team-social a:hover {
-        color: #2a3f62;
+        color: var(--text-light);
+        background: var(--accent);
         transform: translateY(-3px);
-    }
-
-    /* Animations */
-    @keyframes fadeInUp {
-        from {
-            opacity: 0;
-            transform: translateY(20px);
-        }
-        to {
-            opacity: 1;
-            transform: translateY(0);
-        }
     }
 
     /* Message Container */
@@ -200,11 +231,45 @@
     }
 
     .alert {
-        border-radius: 10px;
-        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        border-radius: 15px;
+        box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+        border: none;
+        padding: 1rem 1.5rem;
+    }
+
+    /* Animations */
+    @keyframes slideInUp {
+        from {
+            opacity: 0;
+            transform: translateY(30px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+
+    /* Responsive Adjustments */
+    @media (max-width: 768px) {
+        .hero-title {
+            font-size: 3rem;
+        }
+
+        .hero-subtitle {
+            font-size: 1.25rem;
+        }
+
+        .section-title {
+            font-size: 2.5rem;
+        }
+
+        .service-card {
+            margin-bottom: 30px;
+        }
     }
 </style>
 {% endblock %}
+
 
 {% block content %}
 <main>
@@ -222,21 +287,35 @@
     </section>
 
     <!-- Services Section -->
-    <section class="services" id="services">
+<section class="services py-6" id="services">
         <div class="container">
-            <div class="section-header text-center">
+            <div class="section-header text-center mb-5">
                 <h2 class="section-title">Our Services</h2>
                 <div class="section-divider"></div>
             </div>
-            <div class="row justify-content-center">
-                <div class="col-lg-6">
-                    <a href="{% url 'home2' %}" class="text-decoration-none">
+            <div class="row g-6">
+                <!-- Flow Shop Card -->
+                <div class="col-md-6">
+                    <a href="{% url 'flowshop' %}" class="text-decoration-none">
                         <div class="service-card">
                             <div class="service-icon">
-                                <i class="fas fa-project-diagram"></i>
+                                <i class="fas fa-stream"></i>
                             </div>
-                            <h3>Let's Start Scheduling</h3>
-                            <p>Optimize your job scheduling with our advanced algorithms</p>
+                            <h3>Flow Shop</h3>
+                            <p>The process where all jobs follow the same route.</p>
+                        </div>
+                    </a>
+                </div>
+
+                <!-- Job Shop Card -->
+                <div class="col-md-6">
+                    <a href="{% url 'jobform1' %}" class="text-decoration-none">
+                        <div class="service-card">
+                            <div class="service-icon">
+                                <i class="fas fa-network-wired"></i>
+                            </div>
+                            <h3>Job Shop</h3>
+                            <p>Each job may have a unique processing route.</p>
                         </div>
                     </a>
                 </div>
@@ -255,12 +334,12 @@
                 <!-- Team Member 1 -->
                 <div class="col-lg-3 col-md-6">
                     <div class="team-card">
-                        <div class="team-image">
-                            <img src="{% static 'assets/img/Plan-logo.png' %}" alt="Team Member">
-                        </div>
+{#                        <div class="team-image">#}
+{#                            <img src="{% static 'assets/img/Plan-logo.png' %}" alt="Team Member">#}
+{#                        </div>#}
                         <div class="team-info">
                             <h4 class="team-name">Hiba Nadane</h4>
-                            <p class="team-position">1CI Student ENSAM</p>
+                            <p class="team-position">Industrial Engineering Student</p>
                             <div class="team-social">
                                 <a href="#"><i class="fab fa-linkedin"></i></a>
                                 <a href="#"><i class="fab fa-github"></i></a>
@@ -272,12 +351,12 @@
                 <!-- Team Member 2 -->
                 <div class="col-lg-3 col-md-6">
                     <div class="team-card">
-                        <div class="team-image">
-                            <img src="{% static 'assets/img/Plan-logo.png' %}" alt="Team Member">
-                        </div>
+{#                        <div class="team-image">#}
+{#                            <img src="{% static 'assets/img/Plan-logo.png' %}" alt="Team Member">#}
+{#                        </div>#}
                         <div class="team-info">
-                            <h4 class="team-name">Hiba Nadane</h4>
-                            <p class="team-position">1CI Student ENSAM</p>
+                            <h4 class="team-name">Chmarkh Brahim</h4>
+                            <p class="team-position">Industrial Engineering Student</p>
                             <div class="team-social">
                                 <a href="#"><i class="fab fa-linkedin"></i></a>
                                 <a href="#"><i class="fab fa-github"></i></a>
@@ -289,29 +368,12 @@
                 <!-- Team Member 3 -->
                 <div class="col-lg-3 col-md-6">
                     <div class="team-card">
-                        <div class="team-image">
-                            <img src="{% static 'assets/img/Plan-logo.png' %}" alt="Team Member">
-                        </div>
+{#                        <div class="team-image">#}
+{#                            <img src="{% static 'assets/img/Plan-logo.png' %}" alt="Team Member">#}
+{#                        </div>#}
                         <div class="team-info">
-                            <h4 class="team-name">Hiba Nadane</h4>
-                            <p class="team-position">1CI Student ENSAM</p>
-                            <div class="team-social">
-                                <a href="#"><i class="fab fa-linkedin"></i></a>
-                                <a href="#"><i class="fab fa-github"></i></a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Team Member 4 -->
-                <div class="col-lg-3 col-md-6">
-                    <div class="team-card">
-                        <div class="team-image">
-                            <img src="{% static 'assets/img/Plan-logo.png' %}" alt="Team Member">
-                        </div>
-                        <div class="team-info">
-                            <h4 class="team-name">Hiba Nadane</h4>
-                            <p class="team-position">1CI Student ENSAM</p>
+                            <h4 class="team-name">Bidani Ghofrane</h4>
+                            <p class="team-position">Industrial Engineering Student</p>
                             <div class="team-social">
                                 <a href="#"><i class="fab fa-linkedin"></i></a>
                                 <a href="#"><i class="fab fa-github"></i></a>
@@ -320,7 +382,55 @@
                     </div>
                 </div>
             </div>
-        </div>
+            <div class="row justify-content-center">
+                <!-- Team Member 4 -->
+                <div class="col-lg-3 col-md-6">
+                    <div class="team-card">
+{#                        <div class="team-image">#}
+{#                            <img src="{% static 'assets/img/Plan-logo.png' %}" alt="Team Member">#}
+{#                        </div>#}
+                        <div class="team-info">
+                            <h4 class="team-name">El Khbizi Soulaymane</h4>
+                            <p class="team-position">Industrial Engineering Student</p>
+                            <div class="team-social">
+                                <a href="#"><i class="fab fa-linkedin"></i></a>
+                                <a href="#"><i class="fab fa-github"></i></a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-6">
+                    <div class="team-card">
+{#                        <div class="team-image">#}
+{#                            <img src="{% static 'assets/img/Plan-logo.png' %}" alt="Team Member">#}
+{#                        </div>#}
+                        <div class="team-info">
+                            <h4 class="team-name">El Khbizi Soulaymane</h4>
+                            <p class="team-position">Industrial Engineering Student</p>
+                            <div class="team-social">
+                                <a href="#"><i class="fab fa-linkedin"></i></a>
+                                <a href="#"><i class="fab fa-github"></i></a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-6">
+                    <div class="team-card">
+{#                        <div class="team-image">#}
+{#                            <img src="{% static 'assets/img/Plan-logo.png' %}" alt="Team Member">#}
+{#                        </div>#}
+                        <div class="team-info">
+                            <h4 class="team-name">Rajafallah Mouhcine</h4>
+                            <p class="team-position">Industrial Engineering Student</p>
+                            <div class="team-social">
+                                <a href="#"><i class="fab fa-linkedin"></i></a>
+                                <a href="#"><i class="fab fa-github"></i></a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            </div>
     </section>
 </main>
 

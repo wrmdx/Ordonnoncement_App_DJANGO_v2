@@ -1,6 +1,5 @@
-/* Ensure proper stacking context */
 .navbar {
-    z-index: 1030; /* Higher z-index to stay on top */
+    z-index: 1030;
 }
 
 .main-content {

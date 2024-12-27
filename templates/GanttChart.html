@@ -1,4 +1,4 @@
-{% extends 'Outlet.html' %}
+{% extends 'components/Outlet.html' %}
 {% load static %}
 
 {% block content %}
@@ -213,7 +213,7 @@
             </div>
         </div>
 
-        <form method="get" action="{% url 'home2' %}">
+        <form method="get" action="{% url 'home_page' %}#service">
             <button class="ok-button" type="submit">Continue</button>
         </form>
     </div>

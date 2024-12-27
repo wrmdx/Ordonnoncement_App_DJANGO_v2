@@ -1,34 +1,46 @@
-{% extends 'Outlet.html' %}
+{% extends 'components/Outlet.html' %}
 {% load static %}
 
-{% block content %}
+{% block extra_css %}
 <style>
+    :root {
+        --primary: #2b4c7e;
+        --accent: #4299e1;
+        --gray-100: #f8fafc;
+        --gray-200: #e2e8f0;
+        --shadow-color: rgba(43, 76, 126, 0.15);
+    }
+
     .form-container {
-        padding: 6rem 1rem 2rem 1rem;
-        background: linear-gradient(135deg, #f6f9ff 0%, #edf1f7 100%);
+        padding: 6rem 1.5rem 3rem;
+        background: linear-gradient(135deg, var(--gray-100) 0%, #edf2f7 100%);
         min-height: 100vh;
-        position: relative;
+        display: flex;
+        align-items: flex-start;
+        justify-content: center;
     }
 
     .styled-form {
-        background: rgba(255, 255, 255, 0.95);
-        border-radius: 20px;
-        box-shadow: 0 20px 40px rgba(55, 81, 126, 0.15);
-        padding: 2.5rem;
-        max-width: 480px;
-        margin: 0 auto;
-        border: 1px solid rgba(255, 255, 255, 0.2);
-        animation: formAppear 0.6s ease-out;
+        background: rgba(255, 255, 255, 0.98);
+        border-radius: 24px;
+        box-shadow: 0 25px 50px var(--shadow-color);
+        padding: 3rem;
+        width: 100%;
+        max-width: 520px;
+        border: 1px solid rgba(255, 255, 255, 0.3);
+        backdrop-filter: blur(10px);
+        animation: formSlideUp 0.8s cubic-bezier(0.16, 1, 0.3, 1);
     }
 
     .form-title {
-        color: #37517e;
-        font-size: 1.75rem;
-        font-weight: 700;
-        margin-bottom: 2rem;
+        color: var(--primary);
+        font-size: 2rem;
+        font-weight: 800;
+        margin-bottom: 2.5rem;
         text-align: center;
         position: relative;
-        padding-bottom: 15px;
+        padding-bottom: 1rem;
+        letter-spacing: -0.5px;
     }
 
     .form-title::after {
@@ -37,104 +49,87 @@
         bottom: 0;
         left: 50%;
         transform: translateX(-50%);
-        width: 60px;
-        height: 3px;
-        background: linear-gradient(to right, #37517e, #47b2e4);
+        width: 80px;
+        height: 4px;
+        background: linear-gradient(to right, var(--primary), var(--accent));
         border-radius: 2px;
     }
 
     .field {
         margin-bottom: 2rem;
-        animation: fadeIn 0.5s ease forwards;
+        animation: fadeIn 0.6s ease forwards;
     }
 
     .field label {
         display: block;
-        color: #37517e;
+        color: var(--primary);
         font-weight: 600;
         margin-bottom: 0.75rem;
         font-size: 1.1rem;
     }
 
-    input[type="number"] {
+    input[type="number"],
+    .custom-select {
         width: 100%;
-        padding: 14px;
-        border: 2px solid #e2e8f0;
-        border-radius: 12px;
-        font-size: 1rem;
-        color: #444;
+        padding: 1rem;
+        border: 2px solid var(--gray-200);
+        border-radius: 14px;
+        font-size: 1.1rem;
+        color: #1a365d;
         background-color: white;
-        transition: all 0.3s ease;
+        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     }
 
-    input[type="number"]:hover {
-        border-color: #47b2e4;
+    input[type="number"]:hover,
+    .custom-select:hover {
+        border-color: var(--accent);
+        background-color: var(--gray-100);
     }
 
-    input[type="number"]:focus {
+    input[type="number"]:focus,
+    .custom-select:focus {
         outline: none;
-        border-color: #47b2e4;
-        box-shadow: 0 0 0 3px rgba(71, 178, 228, 0.15);
-    }
-
-    input[type="number"]::-webkit-outer-spin-button,
-    input[type="number"]::-webkit-inner-spin-button {
-        -webkit-appearance: none;
-        margin: 0;
-    }
-
-    input[type="number"] {
-        -moz-appearance: textfield;
+        border-color: var(--accent);
+        box-shadow: 0 0 0 4px rgba(66, 153, 225, 0.15);
+        background-color: white;
     }
 
     .custom-select {
-        width: 100%;
-        padding: 14px;
-        border: 2px solid #e2e8f0;
-        border-radius: 12px;
-        font-size: 1rem;
-        color: #444;
-        background-color: white;
-        transition: all 0.3s ease;
         appearance: none;
-        background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='%2337517e' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
+        background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='%232b4c7e' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
         background-repeat: no-repeat;
-        background-position: right 12px center;
-        background-size: 16px;
-    }
-
-    .custom-select:hover {
-        border-color: #47b2e4;
-    }
-
-    .custom-select:focus {
-        outline: none;
-        border-color: #47b2e4;
-        box-shadow: 0 0 0 3px rgba(71, 178, 228, 0.15);
+        background-position: right 1rem center;
+        background-size: 1.2rem;
+        padding-right: 3rem;
     }
 
     .submit-button {
         width: 100%;
-        padding: 14px;
-        background: linear-gradient(135deg, #37517e 0%, #2a3f62 100%);
+        padding: 1rem;
+        background: linear-gradient(135deg, var(--primary) 0%, var(--accent) 100%);
         color: white;
         border: none;
-        border-radius: 12px;
-        font-size: 1.1rem;
+        border-radius: 14px;
+        font-size: 1.2rem;
         font-weight: 600;
         cursor: pointer;
-        transition: all 0.3s ease;
+        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        margin-top: 1rem;
     }
 
     .submit-button:hover {
         transform: translateY(-2px);
-        box-shadow: 0 8px 20px rgba(55, 81, 126, 0.3);
+        box-shadow: 0 12px 25px var(--shadow-color);
     }
 
-    @keyframes formAppear {
+    .submit-button:active {
+        transform: translateY(0);
+    }
+
+    @keyframes formSlideUp {
         from {
             opacity: 0;
-            transform: translateY(20px);
+            transform: translateY(30px);
         }
         to {
             opacity: 1;
@@ -142,14 +137,33 @@
         }
     }
 
-    @media (max-width: 768px) {
+    @keyframes fadeIn {
+        from {
+            opacity: 0;
+            transform: translateY(10px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+
+    @media (max-width: 640px) {
         .styled-form {
-            padding: 1.5rem;
+            padding: 2rem;
+            margin: 1rem;
+        }
+
+        .form-title {
+            font-size: 1.75rem;
         }
     }
 </style>
+{% endblock %}
 
-<main class="form-container">
+{% block content %}
+
+<main class="form-container" style="padding-top: 150px">
     <div class="styled-form">
         <h2 class="form-title">Enter your problem's information</h2>
 

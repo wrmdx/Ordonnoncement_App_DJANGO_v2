@@ -6,7 +6,6 @@ from .views import (
 
 urlpatterns = [
     path('', home_page, name='home_page'),
-    path('form', home2, name='home2'),
     path('flowshop', home, name='flowshop'),
     path('flowform2/<str:rows>/<str:columns>/<str:cont>', flowform2, name='flowform2'),
     path('gantt/<str:M>/<str:r>/<str:c>/<str:crit>/<str:cont>/<str:R>/<str:d>/<str:S>/<str:N>/<str:NG>/<str:Pm>',
