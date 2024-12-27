@@ -1,0 +1,81 @@
+{% extends 'Outlet.html' %}
+
+{% load static %}
+
+{% block content %}
+
+<main>
+    <div class="login-root">
+        <div class="box-root flex-flex flex-direction--column" style="min-height: 100vh; flex-grow: 1;">
+            <div class="box-root padding-top--24 flex-flex flex-direction--column" style="flex-grow: 1; z-index: 9;">
+                
+                <div class="formbg-outer">
+                  <div class="form-container">
+                            
+                            <form method="post" class="styled-form" id="stripe_login">
+                                {% csrf_token %}
+                                <h2 class="animated-title">Fill in the Job Duration Matrix</h2>
+                            <div class="field padding-bottom--2v4">
+                           
+                                {% for e, l in M %}
+                                E{{ e }}
+                                <br>
+                                <table>
+                                    <thead>
+                                        <tr>
+                                            <th>Job</th>
+                                            {% for j in columns %}
+                                            <th>J{{j}}</th>
+                                            {% endfor %}
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {% for m in l %}
+                                        <tr>
+                                            <td>M{{m}}</td>
+                                            {% for j in columns %}
+                                            <td>
+                                                <input type="number" id="E{{e}}M{{m}}J{{j}}" name="E{{e}}M{{m}}J{{j}}" min="1" required>
+                                            </td>
+                                            {% endfor %}
+                                        </tr>
+                                        {% endfor %}
+                                    </tbody>
+                                </table>
+                                {% endfor %}
+                            </div>
+                        
+                             
+                              <div class="field padding-bottom--15" >
+                                <input type="submit" name="submit" value="Submit" class="custom-button" style="width: 90px;">
+                             </div>
+                               
+                            </form>
+                  </div>
+                     
+                  
+                    <div class="footer-link padding-top--24">
+                        <div class="listing padding-top--24 padding-bottom--24 flex-flex center-center">
+                            <span><a href="#">© Scheduling.com</a></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</main>
+
+
+
+{% endblock content %}
+
+
+<form method="post">
+    {% csrf_token%}
+    population size:<input type="number" id="N" name="N" min="1" required>
+    number of generations:<input type="number" id="NG" name="NG" min="1" required>
+    mutation probability:<input type="number" id="Pm" name="Pm" step="any" min="0" max="1" required>
+    <button type="submit">Next</button>
+  
+  </form>

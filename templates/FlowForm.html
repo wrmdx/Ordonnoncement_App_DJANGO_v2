@@ -1,0 +1,188 @@
+{% extends 'Outlet.html' %}
+{% load static %}
+
+{% block content %}
+<style>
+    .form-container {
+        padding: 6rem 1rem 2rem 1rem;
+        background: linear-gradient(135deg, #f6f9ff 0%, #edf1f7 100%);
+        min-height: 100vh;
+        position: relative;
+    }
+
+    .styled-form {
+        background: rgba(255, 255, 255, 0.95);
+        border-radius: 20px;
+        box-shadow: 0 20px 40px rgba(55, 81, 126, 0.15);
+        padding: 2.5rem;
+        max-width: 480px;
+        margin: 0 auto;
+        border: 1px solid rgba(255, 255, 255, 0.2);
+        animation: formAppear 0.6s ease-out;
+    }
+
+    .form-title {
+        color: #37517e;
+        font-size: 1.75rem;
+        font-weight: 700;
+        margin-bottom: 2rem;
+        text-align: center;
+        position: relative;
+        padding-bottom: 15px;
+    }
+
+    .form-title::after {
+        content: '';
+        position: absolute;
+        bottom: 0;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 60px;
+        height: 3px;
+        background: linear-gradient(to right, #37517e, #47b2e4);
+        border-radius: 2px;
+    }
+
+    .field {
+        margin-bottom: 2rem;
+        animation: fadeIn 0.5s ease forwards;
+    }
+
+    .field label {
+        display: block;
+        color: #37517e;
+        font-weight: 600;
+        margin-bottom: 0.75rem;
+        font-size: 1.1rem;
+    }
+
+    input[type="number"] {
+        width: 100%;
+        padding: 14px;
+        border: 2px solid #e2e8f0;
+        border-radius: 12px;
+        font-size: 1rem;
+        color: #444;
+        background-color: white;
+        transition: all 0.3s ease;
+    }
+
+    input[type="number"]:hover {
+        border-color: #47b2e4;
+    }
+
+    input[type="number"]:focus {
+        outline: none;
+        border-color: #47b2e4;
+        box-shadow: 0 0 0 3px rgba(71, 178, 228, 0.15);
+    }
+
+    input[type="number"]::-webkit-outer-spin-button,
+    input[type="number"]::-webkit-inner-spin-button {
+        -webkit-appearance: none;
+        margin: 0;
+    }
+
+    input[type="number"] {
+        -moz-appearance: textfield;
+    }
+
+    .custom-select {
+        width: 100%;
+        padding: 14px;
+        border: 2px solid #e2e8f0;
+        border-radius: 12px;
+        font-size: 1rem;
+        color: #444;
+        background-color: white;
+        transition: all 0.3s ease;
+        appearance: none;
+        background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='%2337517e' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
+        background-repeat: no-repeat;
+        background-position: right 12px center;
+        background-size: 16px;
+    }
+
+    .custom-select:hover {
+        border-color: #47b2e4;
+    }
+
+    .custom-select:focus {
+        outline: none;
+        border-color: #47b2e4;
+        box-shadow: 0 0 0 3px rgba(71, 178, 228, 0.15);
+    }
+
+    .submit-button {
+        width: 100%;
+        padding: 14px;
+        background: linear-gradient(135deg, #37517e 0%, #2a3f62 100%);
+        color: white;
+        border: none;
+        border-radius: 12px;
+        font-size: 1.1rem;
+        font-weight: 600;
+        cursor: pointer;
+        transition: all 0.3s ease;
+    }
+
+    .submit-button:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 8px 20px rgba(55, 81, 126, 0.3);
+    }
+
+    @keyframes formAppear {
+        from {
+            opacity: 0;
+            transform: translateY(20px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+
+    @media (max-width: 768px) {
+        .styled-form {
+            padding: 1.5rem;
+        }
+    }
+</style>
+
+<main class="form-container">
+    <div class="styled-form">
+        <h2 class="form-title">Enter your problem's information</h2>
+
+        <form method="POST">
+            {% csrf_token %}
+
+            <div class="field">
+                <label for="rows">Number of Machines</label>
+                <input type="number" id="rows" name="rows" min="1" required>
+            </div>
+
+            <div class="field">
+                <label for="columns">Number of jobs:</label>
+                <input type="number" id="columns" name="columns" min="1" required>
+            </div>
+
+            <div class="field">
+                <label for="contrainte">Constraint:</label>
+                <select name="contrainte" id="contrainte" class="custom-select">
+                    <option value="None" selected>None</option>
+                    <option value="no-idle">No Idle</option>
+                    <option value="no-wait">No Wait</option>
+                    <option value="SDST">SDST</option>
+                    <option value="blocking">Blocking</option>
+                    <option value="SDST-no-wait">SDST-no-wait</option>
+                    <option value="SDST-blocking">SDST-blocking</option>
+                </select>
+            </div>
+
+            <div class="field">
+                <input type="submit" name="submit" value="Next" class="submit-button">
+            </div>
+        </form>
+    </div>
+</main>
+{% endblock content %}

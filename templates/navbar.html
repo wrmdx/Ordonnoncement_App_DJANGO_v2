@@ -1,0 +1,225 @@
+{% load static %}
+
+{% block content %}
+<style>
+    /* Navbar Base Styles */
+    .navbar {
+        padding: 18px 0;
+        transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        background: linear-gradient(135deg, #37517e 0%, #2a3f62 100%);
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+        border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    /* Brand Styling */
+    .navbar-brand {
+        font-size: 2rem;
+        font-weight: 700;
+        letter-spacing: 1px;
+        color: #ffffff !important;
+        text-transform: uppercase;
+        position: relative;
+        padding: 5px 0;
+    }
+
+    .navbar-brand::after {
+        content: '';
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        width: 30px;
+        height: 3px;
+        background: #fff;
+        transition: width 0.3s ease;
+    }
+
+    .navbar-brand:hover::after {
+        width: 100%;
+    }
+
+    /* Navigation Items */
+    .nav-item {
+        padding: 0 12px;
+        position: relative;
+    }
+
+    .nav-link {
+        font-size: 1.1rem;
+        font-weight: 500;
+        padding: 10px 5px;
+        margin: 0 10px;
+        position: relative;
+        transition: all 0.3s ease;
+        color: rgba(255, 255, 255, 0.9) !important;
+    }
+
+    .nav-link:before {
+        content: "";
+        position: absolute;
+        width: 0;
+        height: 2px;
+        bottom: 5px;
+        left: 0;
+        background-color: #fff;
+        visibility: hidden;
+        transform: scaleX(0);
+        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .nav-link:hover {
+        color: #ffffff !important;
+        transform: translateY(-1px);
+    }
+
+    .nav-link:hover:before {
+        visibility: visible;
+        transform: scaleX(1);
+        width: 100%;
+    }
+
+    /* Active Link Styling */
+    .nav-link.active {
+        color: #ffffff !important;
+        font-weight: 600;
+    }
+
+    .nav-link.active:before {
+        visibility: visible;
+        width: 100%;
+        transform: scaleX(1);
+    }
+
+    /* Mobile Toggle Button */
+    .navbar-toggler {
+        border: none;
+        padding: 10px;
+        outline: none !important;
+        transition: all 0.3s ease;
+    }
+
+    .navbar-toggler:focus {
+        box-shadow: none;
+    }
+
+    .navbar-toggler-icon {
+        background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' width='30' height='30' viewBox='0 0 30 30'%3e%3cpath stroke='rgba(255, 255, 255, 0.9)' stroke-linecap='round' stroke-miterlimit='10' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e");
+    }
+
+    /* Scrolled State */
+    .navbar.scrolled {
+        padding: 15px 0;
+        background: rgba(55, 81, 126, 0.98);
+        backdrop-filter: blur(10px);
+        border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .navbar.scrolled .nav-link {
+        padding: 8px 5px;
+    }
+
+    /* Navigation Container */
+    .nav-container {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        width: 100%;
+    }
+
+    /* Mobile Adjustments */
+    @media (max-width: 991px) {
+        .navbar-collapse {
+            background: rgba(55, 81, 126, 0.98);
+            padding: 20px;
+            border-radius: 10px;
+            margin-top: 10px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        .nav-link {
+            padding: 12px 5px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .nav-link:before {
+            display: none;
+        }
+
+        .nav-item:last-child .nav-link {
+            border-bottom: none;
+        }
+
+        .navbar-nav {
+            padding: 10px 0;
+        }
+    }
+
+    /* Animation Keyframes */
+    @keyframes fadeInDown {
+        from {
+            opacity: 0;
+            transform: translateY(-20px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+
+    .navbar-nav .nav-item {
+        animation: fadeInDown 0.5s ease forwards;
+        opacity: 0;
+    }
+
+    .navbar-nav .nav-item:nth-child(1) { animation-delay: 0.1s; }
+    .navbar-nav .nav-item:nth-child(2) { animation-delay: 0.2s; }
+    .navbar-nav .nav-item:nth-child(3) { animation-delay: 0.3s; }
+</style>
+
+<nav class="navbar navbar-expand-lg navbar-dark fixed-top">
+    <div class="container">
+        <a class="navbar-brand" href="{% url 'home_page' %}">PlanIt</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+                aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+                <li class="nav-item">
+                    <a class="nav-link" href="#about">About</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'home_page' %}#services">Services</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+<script>
+    // Enhanced scroll behavior
+    window.addEventListener('scroll', function() {
+        const navbar = document.querySelector('.navbar');
+        const scrollPosition = window.scrollY;
+
+        if (scrollPosition > 50) {
+            navbar.classList.add('scrolled');
+        } else {
+            navbar.classList.remove('scrolled');
+        }
+    });
+
+    // Add active class to current nav item
+    document.addEventListener('DOMContentLoaded', function() {
+        const currentLocation = location.href;
+        const menuItems = document.querySelectorAll('.nav-link');
+
+        menuItems.forEach(item => {
+            if(item.href === currentLocation) {
+                item.classList.add('active');
+            }
+        });
+    });
+</script>
+
+{% endblock content %}

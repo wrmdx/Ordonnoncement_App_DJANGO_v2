@@ -1,0 +1,221 @@
+{% extends 'Outlet.html' %}
+{% load static %}
+
+{% block content %}
+<style>
+    .result-container {
+        padding: 6rem 1rem 2rem 1rem;
+        background: linear-gradient(135deg, #f6f9ff 0%, #edf1f7 100%);
+        min-height: 100vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .result-card {
+        background-color: #ffffff;
+        border-radius: 20px;
+        box-shadow: 0 10px 30px rgba(55, 81, 126, 0.15);
+        padding: 2.5rem;
+        max-width: 1000px;
+        width: 100%;
+        margin: 0 auto;
+        text-align: center;
+        position: relative;
+        overflow: hidden;
+    }
+
+    .result-title {
+        color: #37517e;
+        font-size: 1.75rem;
+        font-weight: 700;
+        margin-bottom: 2rem;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+    }
+
+    .gantt-container {
+        position: relative;
+        margin-bottom: 2.5rem;
+    }
+
+    .gantt-image {
+        max-width: 100%;
+        height: auto;
+        border-radius: 12px;
+        box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+        transition: transform 0.3s ease;
+    }
+
+    .gantt-image:hover {
+        transform: scale(1.01);
+    }
+
+    .metrics-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        gap: 1.5rem;
+        margin: 2.5rem 0;
+        padding: 0 1rem;
+    }
+
+    .metric-card {
+        background: linear-gradient(145deg, #ffffff, #f8f9fa);
+        border-radius: 15px;
+        padding: 1.5rem;
+        text-align: center;
+        transition: all 0.3s ease;
+        border: 1px solid rgba(55, 81, 126, 0.1);
+        position: relative;
+        overflow: hidden;
+    }
+
+    .metric-card::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 4px;
+        height: 100%;
+        background: #37517e;
+        opacity: 0.8;
+    }
+
+    .metric-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 8px 20px rgba(55, 81, 126, 0.15);
+    }
+
+    .metric-label {
+        color: #4a5568;
+        font-size: 0.95rem;
+        font-weight: 600;
+        margin-bottom: 0.75rem;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+    }
+
+    .metric-value {
+        color: #37517e;
+        font-size: 1.5rem;
+        font-weight: 700;
+        text-shadow: 1px 1px 0 rgba(255, 255, 255, 0.5);
+    }
+
+    .ok-button {
+        background: linear-gradient(135deg, #37517e 0%, #2a3f62 100%);
+        color: #ffffff;
+        padding: 14px 40px;
+        border: none;
+        border-radius: 50px;
+        font-size: 1.1rem;
+        font-weight: 600;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        min-width: 150px;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        margin-top: 1rem;
+    }
+
+    .ok-button:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 8px 25px rgba(55, 81, 126, 0.25);
+        background: linear-gradient(135deg, #2a3f62 0%, #1e2d47 100%);
+    }
+
+    @media (max-width: 768px) {
+        .result-card {
+            padding: 1.5rem;
+        }
+
+        .result-title {
+            font-size: 1.5rem;
+        }
+
+        .metrics-grid {
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 1rem;
+        }
+
+        .metric-label {
+            font-size: 0.85rem;
+        }
+
+        .metric-value {
+            font-size: 1.25rem;
+        }
+    }
+
+    @media (min-width: 1200px) {
+        .metrics-grid {
+            grid-template-columns: repeat(3, 1fr);
+        }
+    }
+
+    /* Animation for metrics */
+    @keyframes fadeInUp {
+        from {
+            opacity: 0;
+            transform: translateY(20px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+
+    .metric-card {
+        animation: fadeInUp 0.5s ease forwards;
+        opacity: 0;
+    }
+
+    .metric-card:nth-child(1) { animation-delay: 0.1s; }
+    .metric-card:nth-child(2) { animation-delay: 0.2s; }
+    .metric-card:nth-child(3) { animation-delay: 0.3s; }
+    .metric-card:nth-child(4) { animation-delay: 0.4s; }
+    .metric-card:nth-child(5) { animation-delay: 0.5s; }
+    .metric-card:nth-child(6) { animation-delay: 0.6s; }
+</style>
+
+<div class="result-container">
+    <div class="result-card">
+        <h1 class="result-title">Scheduling Results</h1>
+
+        <div class="gantt-container">
+            <img class="gantt-image img-fluid" src="{% static 'images/gantt_img.png' %}" alt="Gantt Chart Image">
+        </div>
+
+        <div class="metrics-grid">
+            <div class="metric-card">
+                <div class="metric-label">Makespan (Cmax)</div>
+                <div class="metric-value">{{ metrics.Cmax|floatformat:2 }}</div>
+            </div>
+            <div class="metric-card">
+                <div class="metric-label">Total Flow Time</div>
+                <div class="metric-value">{{ metrics.TFT|floatformat:2 }}</div>
+            </div>
+            <div class="metric-card">
+                <div class="metric-label">Mean Flow Time</div>
+                <div class="metric-value">{{ metrics.TT|floatformat:2 }}</div>
+            </div>
+            <div class="metric-card">
+                <div class="metric-label">Max Tardiness</div>
+                <div class="metric-value">{{ metrics.EMAX|floatformat:2 }}</div>
+            </div>
+            <div class="metric-card">
+                <div class="metric-label">Total Tardiness</div>
+                <div class="metric-value">{{ metrics.TFR|floatformat:2 }}</div>
+            </div>
+            <div class="metric-card">
+                <div class="metric-label">Mean Tardiness</div>
+                <div class="metric-value">{{ metrics.TAR|floatformat:2 }}</div>
+            </div>
+        </div>
+
+        <form method="get" action="{% url 'home2' %}">
+            <button class="ok-button" type="submit">Continue</button>
+        </form>
+    </div>
+</div>
+{% endblock content %}

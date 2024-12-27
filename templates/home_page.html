@@ -1,0 +1,337 @@
+{% extends 'Outlet.html' %}
+{% load static %}
+{% load django_bootstrap5 %}
+
+{% block title %}Home - Job Scheduling Solution{% endblock %}
+
+{% block extra_css %}
+<style>
+    /* Hero Section */
+    .hero {
+        min-height: 100vh;
+        background-size: cover;
+        background-position: center;
+        position: relative;
+        padding: 120px 0;
+    }
+
+    .hero::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: linear-gradient(135deg, rgba(55, 81, 126, 0.9) 0%, rgba(42, 63, 98, 0.85) 100%);
+    }
+
+    .hero-content {
+        position: relative;
+        z-index: 1;
+        color: #ffffff;
+    }
+
+    .hero-title {
+        font-size: 3.5rem;
+        font-weight: 700;
+        margin-bottom: 1.5rem;
+        animation: fadeInUp 1s ease;
+    }
+
+    .hero-subtitle {
+        font-size: 1.25rem;
+        margin-bottom: 2rem;
+        animation: fadeInUp 1s ease 0.2s;
+        opacity: 0;
+        animation-fill-mode: forwards;
+    }
+
+    .cta-button {
+        display: inline-block;
+        padding: 15px 35px;
+        background: #ffffff;
+        color: #37517e;
+        border-radius: 50px;
+        font-weight: 600;
+        text-decoration: none;
+        transition: all 0.3s ease;
+        animation: fadeInUp 1s ease 0.4s;
+        opacity: 0;
+        animation-fill-mode: forwards;
+    }
+
+    .cta-button:hover {
+        background: transparent;
+        color: #ffffff;
+        border: 2px solid #ffffff;
+        transform: translateY(-3px);
+    }
+
+    /* Services Section */
+    .services {
+        padding: 100px 0;
+        background: #f8f9fa;
+    }
+
+    .section-header {
+        margin-bottom: 60px;
+    }
+
+    .section-title {
+        color: #37517e;
+        font-size: 2.5rem;
+        font-weight: 700;
+        margin-bottom: 20px;
+    }
+
+    .section-divider {
+        width: 60px;
+        height: 3px;
+        background: #37517e;
+        margin: 0 auto;
+    }
+
+    .service-card {
+        background: #ffffff;
+        padding: 40px 30px;
+        border-radius: 15px;
+        text-align: center;
+        transition: all 0.3s ease;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+    }
+
+    .service-card:hover {
+        transform: translateY(-10px);
+        box-shadow: 0 15px 35px rgba(55, 81, 126, 0.15);
+    }
+
+    .service-icon {
+        font-size: 2.5rem;
+        color: #37517e;
+        margin-bottom: 20px;
+    }
+
+    /* Team Section */
+    .team {
+        padding: 100px 0;
+        background: #ffffff;
+    }
+
+    .team-card {
+        background: #ffffff;
+        border-radius: 15px;
+        overflow: hidden;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        transition: all 0.3s ease;
+        margin-bottom: 30px;
+    }
+
+    .team-card:hover {
+        transform: translateY(-10px);
+        box-shadow: 0 15px 35px rgba(55, 81, 126, 0.15);
+    }
+
+    .team-image {
+        width: 120px;
+        height: 120px;
+        border-radius: 50%;
+        margin: -60px auto 20px;
+        overflow: hidden;
+        border: 5px solid #ffffff;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    }
+
+    .team-image img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+
+    .team-info {
+        padding: 20px 30px 30px;
+        text-align: center;
+    }
+
+    .team-name {
+        color: #37517e;
+        font-size: 1.25rem;
+        font-weight: 600;
+        margin-bottom: 5px;
+    }
+
+    .team-position {
+        color: #6c757d;
+        font-size: 0.9rem;
+        margin-bottom: 15px;
+    }
+
+    .team-social {
+        display: flex;
+        justify-content: center;
+        gap: 15px;
+    }
+
+    .team-social a {
+        color: #37517e;
+        font-size: 1.1rem;
+        transition: all 0.3s ease;
+    }
+
+    .team-social a:hover {
+        color: #2a3f62;
+        transform: translateY(-3px);
+    }
+
+    /* Animations */
+    @keyframes fadeInUp {
+        from {
+            opacity: 0;
+            transform: translateY(20px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+
+    /* Message Container */
+    .message-container {
+        z-index: 1000;
+    }
+
+    .alert {
+        border-radius: 10px;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<main>
+    <!-- Hero Section -->
+    <section class="hero d-flex align-items-center" id="home" style="background-image: url('{% static 'assets/img/hero_icon.png' %}')">
+        <div class="hero-content container">
+            <div class="row">
+                <div class="col-lg-8 mx-auto text-center">
+                    <h1 class="hero-title">Better Solutions For<br>Scheduling Jobs</h1>
+                    <p class="hero-subtitle">We are here to give the optimal solution</p>
+                    <a href="#services" class="cta-button">Explore Services</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Services Section -->
+    <section class="services" id="services">
+        <div class="container">
+            <div class="section-header text-center">
+                <h2 class="section-title">Our Services</h2>
+                <div class="section-divider"></div>
+            </div>
+            <div class="row justify-content-center">
+                <div class="col-lg-6">
+                    <a href="{% url 'home2' %}" class="text-decoration-none">
+                        <div class="service-card">
+                            <div class="service-icon">
+                                <i class="fas fa-project-diagram"></i>
+                            </div>
+                            <h3>Let's Start Scheduling</h3>
+                            <p>Optimize your job scheduling with our advanced algorithms</p>
+                        </div>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Team Section -->
+    <section class="team" id="team">
+        <div class="container">
+            <div class="section-header text-center">
+                <h2 class="section-title">Our Team</h2>
+                <div class="section-divider"></div>
+            </div>
+            <div class="row justify-content-center">
+                <!-- Team Member 1 -->
+                <div class="col-lg-3 col-md-6">
+                    <div class="team-card">
+                        <div class="team-image">
+                            <img src="{% static 'assets/img/Plan-logo.png' %}" alt="Team Member">
+                        </div>
+                        <div class="team-info">
+                            <h4 class="team-name">Hiba Nadane</h4>
+                            <p class="team-position">1CI Student ENSAM</p>
+                            <div class="team-social">
+                                <a href="#"><i class="fab fa-linkedin"></i></a>
+                                <a href="#"><i class="fab fa-github"></i></a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Team Member 2 -->
+                <div class="col-lg-3 col-md-6">
+                    <div class="team-card">
+                        <div class="team-image">
+                            <img src="{% static 'assets/img/Plan-logo.png' %}" alt="Team Member">
+                        </div>
+                        <div class="team-info">
+                            <h4 class="team-name">Hiba Nadane</h4>
+                            <p class="team-position">1CI Student ENSAM</p>
+                            <div class="team-social">
+                                <a href="#"><i class="fab fa-linkedin"></i></a>
+                                <a href="#"><i class="fab fa-github"></i></a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Team Member 3 -->
+                <div class="col-lg-3 col-md-6">
+                    <div class="team-card">
+                        <div class="team-image">
+                            <img src="{% static 'assets/img/Plan-logo.png' %}" alt="Team Member">
+                        </div>
+                        <div class="team-info">
+                            <h4 class="team-name">Hiba Nadane</h4>
+                            <p class="team-position">1CI Student ENSAM</p>
+                            <div class="team-social">
+                                <a href="#"><i class="fab fa-linkedin"></i></a>
+                                <a href="#"><i class="fab fa-github"></i></a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Team Member 4 -->
+                <div class="col-lg-3 col-md-6">
+                    <div class="team-card">
+                        <div class="team-image">
+                            <img src="{% static 'assets/img/Plan-logo.png' %}" alt="Team Member">
+                        </div>
+                        <div class="team-info">
+                            <h4 class="team-name">Hiba Nadane</h4>
+                            <p class="team-position">1CI Student ENSAM</p>
+                            <div class="team-social">
+                                <a href="#"><i class="fab fa-linkedin"></i></a>
+                                <a href="#"><i class="fab fa-github"></i></a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</main>
+
+{% if messages %}
+<div class="message-container position-fixed bottom-0 end-0 p-3">
+    {% for message in messages %}
+    <div class="alert alert-{{ message.tags }} alert-dismissible fade show" role="alert">
+        {{ message }}
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+    {% endfor %}
+</div>
+{% endif %}
+{% endblock %}

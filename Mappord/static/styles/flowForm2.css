@@ -1,0 +1,33 @@
+/* Add these at the top of your CSS file */
+.main-content {
+    padding-top: 76px; /* Height of navbar */
+    min-height: 100vh;
+    background: linear-gradient(135deg, var(--primary-color), var(--primary-dark));
+    position: relative;
+}
+
+.page-container {
+    width: 100%;
+    min-height: calc(100vh - 76px);
+    padding: 2rem 1rem;
+}
+
+.form-wrapper {
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+/* Update your existing form-container styles */
+.form-container {
+    background: rgba(255, 255, 255, 0.95);
+    border-radius: 20px;
+    padding: 2.5rem;
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
+    backdrop-filter: blur(10px);
+    margin: 0 auto;
+}
+
+/* Remove or comment out the conflicting styles */
+/* .login-root, .box-root, .padding-top--24 classes can be removed */
+
+/* Rest of your existing CSS remains the same */

@@ -1,0 +1,265 @@
+{% extends 'Outlet.html' %}
+{% load static %}
+
+{% block content %}
+<style>
+    .form-container {
+        min-height: 100vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: linear-gradient(135deg, #f6f9ff 0%, #edf1f7 100%);
+        padding: 6rem 1rem 2rem 1rem;
+        position: relative;
+        overflow: hidden;
+    }
+
+    /* Animated background elements */
+    .form-container::before,
+    .form-container::after {
+        content: '';
+        position: absolute;
+        border-radius: 50%;
+        opacity: 0.1;
+        animation: float 15s infinite ease-in-out;
+    }
+
+    .form-container::before {
+        width: 300px;
+        height: 300px;
+        background: linear-gradient(135deg, #37517e 0%, #2a3f62 100%);
+        top: -100px;
+        right: -100px;
+    }
+
+    .form-container::after {
+        width: 200px;
+        height: 200px;
+        background: linear-gradient(135deg, #47b2e4 0%, #2563eb 100%);
+        bottom: -50px;
+        left: -50px;
+        animation-delay: -5s;
+    }
+
+    @keyframes float {
+        0%, 100% { transform: translate(0, 0) rotate(0deg); }
+        50% { transform: translate(20px, 20px) rotate(180deg); }
+    }
+
+    .formbg {
+        background: rgba(255, 255, 255, 0.95);
+        backdrop-filter: blur(10px);
+        border-radius: 20px;
+        box-shadow: 0 20px 40px rgba(55, 81, 126, 0.15);
+        width: 100%;
+        max-width: 480px;
+        margin: 0 auto;
+        border: 1px solid rgba(255, 255, 255, 0.2);
+        animation: formAppear 0.6s ease-out;
+    }
+
+    @keyframes formAppear {
+        from {
+            opacity: 0;
+            transform: translateY(20px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+
+    .formbg-inner {
+        padding: 40px;
+    }
+
+    .form-title {
+        color: #37517e;
+        font-size: 1.75rem;
+        font-weight: 700;
+        margin-bottom: 2rem;
+        text-align: center;
+        position: relative;
+        padding-bottom: 15px;
+    }
+
+    .form-title::after {
+        content: '';
+        position: absolute;
+        bottom: 0;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 60px;
+        height: 3px;
+        background: linear-gradient(to right, #37517e, #47b2e4);
+        border-radius: 2px;
+    }
+
+    .operations-table {
+        width: 100%;
+        border-collapse: separate;
+        border-spacing: 0;
+        margin: 1.5rem 0;
+        border-radius: 12px;
+        overflow: hidden;
+        box-shadow: 0 4px 15px rgba(55, 81, 126, 0.1);
+    }
+
+    .operations-table th,
+    .operations-table td {
+        padding: 16px;
+        text-align: center;
+        border: 1px solid rgba(226, 232, 240, 0.6);
+        background: white;
+        transition: background-color 0.3s ease;
+    }
+
+    .operations-table th {
+        background: linear-gradient(135deg, #37517e 0%, #2a3f62 100%);
+        color: white;
+        font-weight: 600;
+        text-transform: uppercase;
+        font-size: 0.9rem;
+        letter-spacing: 0.5px;
+    }
+
+    .operations-table td:first-child {
+        background: linear-gradient(135deg, #37517e 0%, #2a3f62 100%);
+        color: white;
+        font-weight: 600;
+    }
+
+    .operations-input {
+        width: 100px;
+        padding: 12px;
+        border: 2px solid #e2e8f0;
+        border-radius: 8px;
+        text-align: center;
+        font-size: 1rem;
+        color: #444;
+        transition: all 0.3s ease;
+        background: rgba(255, 255, 255, 0.9);
+    }
+
+    .operations-input:hover {
+        border-color: #47b2e4;
+    }
+
+    .operations-input:focus {
+        outline: none;
+        border-color: #47b2e4;
+        box-shadow: 0 0 0 3px rgba(71, 178, 228, 0.15);
+        background: white;
+    }
+
+    /* Remove spinner buttons */
+    .operations-input::-webkit-outer-spin-button,
+    .operations-input::-webkit-inner-spin-button {
+        -webkit-appearance: none;
+        margin: 0;
+    }
+
+    .operations-input {
+        -moz-appearance: textfield;
+    }
+
+    .submit-button {
+        background: linear-gradient(135deg, #37517e 0%, #2a3f62 100%);
+        color: white;
+        padding: 14px 35px;
+        border: none;
+        border-radius: 12px;
+        font-size: 1.1rem;
+        font-weight: 600;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        min-width: 120px;
+        position: relative;
+        overflow: hidden;
+    }
+
+    .submit-button::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: -100%;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+        transition: 0.5s;
+    }
+
+    .submit-button:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 8px 20px rgba(55, 81, 126, 0.3);
+    }
+
+    .submit-button:hover::before {
+        left: 100%;
+    }
+
+    @media (max-width: 768px) {
+        .formbg-inner {
+            padding: 30px 20px;
+        }
+
+        .operations-table {
+            display: block;
+            overflow-x: auto;
+            white-space: nowrap;
+        }
+
+        .operations-table td,
+        .operations-table th {
+            padding: 12px;
+        }
+
+        .operations-input {
+            width: 80px;
+            padding: 10px;
+        }
+    }
+</style>
+
+<main class="form-container">
+    <div class="formbg">
+        <div class="formbg-inner">
+            <span class="form-title">Enter your job's number of operations</span>
+
+            <form id="stripe-login" method="POST">
+                {% csrf_token %}
+                <table class="operations-table">
+                    <thead>
+                        <tr>
+                            <th>Job</th>
+                            <th>Operations</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for j in Jobs %}
+                        <tr>
+                            <td>J{{j}}</td>
+                            <td>
+                                <input type="number"
+                                       id="o{{j}}"
+                                       name="o{{j}}"
+                                       min="1"
+                                       required
+                                       class="operations-input">
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+
+                <div style="text-align: center; margin-top: 2rem;">
+                    <input type="submit"
+                           name="submit"
+                           value="Next"
+                           class="submit-button">
+                </div>
+            </form>
+        </div>
+    </div>
+</main>
+{% endblock content %}

@@ -1,0 +1,329 @@
+{% extends 'Outlet.html' %}
+{% load static %}
+
+{% block content %}
+<style>
+    .form-container {
+        min-height: 100vh;
+        background: linear-gradient(135deg, #f6f9ff 0%, #edf1f7 100%);
+        padding: 6rem 1rem 2rem 1rem;
+        position: relative;
+        overflow: hidden;
+    }
+
+    /* Animated background elements */
+    .form-container::before,
+    .form-container::after {
+        content: '';
+        position: absolute;
+        border-radius: 50%;
+        opacity: 0.1;
+        animation: float 15s infinite ease-in-out;
+    }
+
+    .form-container::before {
+        width: 300px;
+        height: 300px;
+        background: linear-gradient(135deg, #37517e 0%, #2a3f62 100%);
+        top: -100px;
+        right: -100px;
+    }
+
+    .form-container::after {
+        width: 200px;
+        height: 200px;
+        background: linear-gradient(135deg, #47b2e4 0%, #2563eb 100%);
+        bottom: -50px;
+        left: -50px;
+        animation-delay: -5s;
+    }
+
+    @keyframes float {
+        0%, 100% { transform: translate(0, 0) rotate(0deg); }
+        50% { transform: translate(20px, 20px) rotate(180deg); }
+    }
+
+    .styled-form {
+        background: rgba(255, 255, 255, 0.95);
+        backdrop-filter: blur(10px);
+        border-radius: 20px;
+        box-shadow: 0 20px 40px rgba(55, 81, 126, 0.15);
+        padding: 2.5rem;
+        max-width: 95%;
+        margin: 0 auto;
+        border: 1px solid rgba(255, 255, 255, 0.2);
+        animation: formAppear 0.6s ease-out;
+    }
+
+    @keyframes formAppear {
+        from {
+            opacity: 0;
+            transform: translateY(20px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+
+    .form-title {
+        color: #37517e;
+        font-size: 1.75rem;
+        font-weight: 700;
+        margin-bottom: 2rem;
+        text-align: center;
+        position: relative;
+        padding-bottom: 15px;
+    }
+
+    .form-title::after {
+        content: '';
+        position: absolute;
+        bottom: 0;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 60px;
+        height: 3px;
+        background: linear-gradient(to right, #37517e, #47b2e4);
+        border-radius: 2px;
+    }
+
+    .operations-table {
+        width: 100%;
+        border-collapse: separate;
+        border-spacing: 0;
+        margin-bottom: 2rem;
+        border-radius: 12px;
+        overflow: hidden;
+        box-shadow: 0 4px 15px rgba(55, 81, 126, 0.1);
+    }
+
+    .operations-table th,
+    .operations-table td {
+        border: 1px solid rgba(226, 232, 240, 0.6);
+        padding: 16px;
+        text-align: center;
+        background: white;
+        transition: background-color 0.3s ease;
+    }
+
+    .operations-table th {
+        background: linear-gradient(135deg, #37517e 0%, #2a3f62 100%);
+        color: white;
+        font-weight: 600;
+        text-transform: uppercase;
+        font-size: 0.9rem;
+        letter-spacing: 0.5px;
+    }
+
+    .operations-table td:first-child {
+        background: linear-gradient(135deg, #37517e 0%, #2a3f62 100%);
+        color: white;
+        font-weight: 600;
+    }
+
+    .op-input-group {
+        display: flex;
+        gap: 10px;
+        justify-content: center;
+    }
+
+    .op-input {
+        width: 70px;
+        padding: 10px;
+        border: 2px solid #e2e8f0;
+        border-radius: 8px;
+        text-align: center;
+        font-size: 0.95rem;
+        color: #444;
+        transition: all 0.3s ease;
+        background: rgba(255, 255, 255, 0.9);
+    }
+
+    .op-input:hover {
+        border-color: #47b2e4;
+    }
+
+    .op-input:focus {
+        outline: none;
+        border-color: #47b2e4;
+        box-shadow: 0 0 0 3px rgba(71, 178, 228, 0.15);
+        background: white;
+    }
+
+    /* Remove spinner buttons */
+    .op-input::-webkit-outer-spin-button,
+    .op-input::-webkit-inner-spin-button {
+        -webkit-appearance: none;
+        margin: 0;
+    }
+
+    .op-input {
+        -moz-appearance: textfield;
+    }
+
+    .custom-select {
+        width: 100%;
+        max-width: 200px;
+        padding: 14px;
+        border: 2px solid #e2e8f0;
+        border-radius: 12px;
+        font-size: 1rem;
+        color: #444;
+        background-color: white;
+        transition: all 0.3s ease;
+        appearance: none;
+        background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='%2337517e' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
+        background-repeat: no-repeat;
+        background-position: right 12px center;
+        background-size: 16px;
+        margin: 8px 0;
+    }
+
+    .custom-select:hover {
+        border-color: #47b2e4;
+    }
+
+    .custom-select:focus {
+        outline: none;
+        border-color: #47b2e4;
+        box-shadow: 0 0 0 3px rgba(71, 178, 228, 0.15);
+    }
+
+    .form-label {
+        display: block;
+        color: #37517e;
+        font-weight: 600;
+        margin: 1.5rem 0 0.75rem 0;
+        font-size: 1.1rem;
+    }
+
+    .custom-button {
+        background: linear-gradient(135deg, #37517e 0%, #2a3f62 100%);
+        color: white;
+        padding: 14px 35px;
+        border: none;
+        border-radius: 12px;
+        font-size: 1.1rem;
+        font-weight: 600;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        margin-top: 2rem;
+        position: relative;
+        overflow: hidden;
+        min-width: 140px;
+    }
+
+    .custom-button::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: -100%;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+        transition: 0.5s;
+    }
+
+    .custom-button:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 8px 20px rgba(55, 81, 126, 0.3);
+    }
+
+    .custom-button:hover::before {
+        left: 100%;
+    }
+
+    .footer-link {
+        text-align: center;
+        padding: 2rem 0;
+        color: #37517e;
+    }
+
+    .footer-link a {
+        color: inherit;
+        text-decoration: none;
+        transition: color 0.3s ease;
+        font-weight: 500;
+    }
+
+    .footer-link a:hover {
+        color: #47b2e4;
+    }
+
+    @media (max-width: 768px) {
+        .styled-form {
+            padding: 1.5rem;
+        }
+
+        .operations-table {
+            display: block;
+            overflow-x: auto;
+            white-space: nowrap;
+        }
+
+        .operations-table td,
+        .operations-table th {
+            padding: 12px;
+        }
+
+        .op-input {
+            width: 60px;
+            padding: 8px;
+        }
+    }
+</style>
+
+<main class="form-container">
+    <div class="styled-form">
+        <span class="form-title">Define machine and processing time of every operation</span>
+
+        <form method="post" id="stripe_login">
+            {% csrf_token %}
+
+            <div class="table-responsive">
+                <table class="operations-table">
+                    <thead>
+                        <tr>
+                            <th>Jobs</th>
+                            {% for o in Op %}
+                            <th>O{{o}}</th>
+                            {% endfor %}
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for j,op in N %}
+                        <tr>
+                            <td>J{{j}}</td>
+                            {% for o in op %}
+                            <td class="op-input-group">
+                                <input type="number" id="O{{j}}{{o}}" name="O{{j}}{{o}}" min="1" placeholder="m" required class="op-input">
+                                <input type="number" id="p{{j}}{{o}}" name="p{{j}}{{o}}" min="1" placeholder="p" required class="op-input">
+                            </td>
+                            {% endfor %}
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+
+            <label for="critere" class="form-label">Criteria:</label>
+            <select name="critere" id="critere" class="custom-select">
+                {% if y %}
+                <option value="Jackson">Jackson</option>
+                {% endif %}
+                <option value="MILP">MILP</option>
+            </select>
+
+            <label for="contrainte" class="form-label">Constraint:</label>
+            <select name="contrainte" id="contrainte" class="custom-select">
+                <option value="None" selected>None</option>
+            </select>
+
+            <div style="text-align: center;">
+                <button type="submit" class="custom-button">Next</button>
+            </div>
+        </form>
+    </div>
+</main>
+{% endblock content %}

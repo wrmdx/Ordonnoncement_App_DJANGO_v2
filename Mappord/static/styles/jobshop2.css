@@ -1,0 +1,159 @@
+/* Reset padding since we'll handle it in main-content */
+body {
+    margin: 0;
+    padding: 0;
+    background-color: #f8f9fa;
+}
+
+/* Main content wrapper */
+.main-content {
+    padding-top: 76px; /* Height of navbar */
+    min-height: 100vh;
+    background: linear-gradient(135deg, #2196F3, #1976D2);
+}
+
+.container {
+    max-width: 1200px;
+    padding: 2rem;
+    margin: 0 auto;
+}
+
+/* Card-like sections */
+.section {
+    background: rgba(255, 255, 255, 0.98);
+    padding: 1.5rem;
+    border-radius: 12px;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+    margin-bottom: 2rem;
+    backdrop-filter: blur(10px);
+}
+
+.section-title {
+    color: #2c3e50;
+    margin-bottom: 1.5rem;
+    font-size: 1.25rem;
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding-bottom: 0.75rem;
+    border-bottom: 2px solid #e9ecef;
+}
+
+.section-title i {
+    color: #2196F3;
+}
+
+/* Table styles */
+.table {
+    width: 100%;
+    margin-bottom: 1rem;
+    border-collapse: separate;
+    border-spacing: 0;
+}
+
+.table th {
+    background-color: #f8f9fa;
+    padding: 0.75rem;
+    font-weight: 600;
+    color: #2c3e50;
+    border: 1px solid #e9ecef;
+}
+
+.table td {
+    padding: 0.5rem;
+    vertical-align: middle;
+    border: 1px solid #e9ecef;
+}
+
+/* Input styles */
+.input-sm {
+    width: 70px;
+    text-align: center;
+}
+
+.form-control {
+    border: 1px solid #e2e8f0;
+    border-radius: 6px;
+    padding: 0.5rem;
+    transition: all 0.2s ease;
+    font-size: 0.9rem;
+}
+
+.form-control:focus {
+    border-color: #2196F3;
+    box-shadow: 0 0 0 3px rgba(33, 150, 243, 0.1);
+    outline: none;
+}
+
+/* Remove spinner for number inputs */
+.form-control::-webkit-outer-spin-button,
+.form-control::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+.form-control[type=number] {
+    -moz-appearance: textfield;
+}
+
+/* Select dropdown */
+select.form-control {
+    width: 100%;
+    max-width: 300px;
+    padding: 0.5rem 1rem;
+    background-color: white;
+    cursor: pointer;
+}
+
+/* Submit button */
+.btn-primary {
+    background: linear-gradient(45deg, #2196F3, #1976D2);
+    border: none;
+    padding: 0.75rem 2rem;
+    font-weight: 500;
+    border-radius: 50px;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 15px rgba(33, 150, 243, 0.3);
+}
+
+.btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(33, 150, 243, 0.4);
+}
+
+/* Page title */
+h2.text-center {
+    color: white;
+    font-size: 2rem;
+    font-weight: 600;
+    margin-bottom: 2rem;
+    text-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+/* Responsive styles */
+@media (max-width: 768px) {
+    .container {
+        padding: 1rem;
+    }
+
+    .table {
+        display: block;
+        overflow-x: auto;
+        white-space: nowrap;
+    }
+
+    .input-sm {
+        width: 60px;
+    }
+
+    .section {
+        padding: 1rem;
+    }
+}
+
+/* Remove the inline styles from HTML */
+.navbar {
+    background: linear-gradient(45deg, rgba(33, 150, 243, 0.95), rgba(25, 118, 210, 0.95)) !important;
+    backdrop-filter: blur(10px);
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+}

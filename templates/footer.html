@@ -1,0 +1,47 @@
+{% block content %}
+<style>
+    .footer-link {
+        background: #37517e;
+        color: #ffffff;
+        padding: 2rem 0;
+        text-align: center;
+        position: relative;
+        width: 100%;
+    }
+
+    .footer-link span {
+        position: relative;
+        display: inline-block;
+    }
+
+    .footer-link a {
+        color: #ffffff;
+        text-decoration: none;
+        font-size: 1rem;
+        font-weight: 500;
+        transition: all 0.3s ease;
+        padding: 0.5rem 1rem;
+        border-radius: 4px;
+    }
+
+    .footer-link a:hover {
+        color: #e2e8f0;
+        transform: translateY(-1px);
+    }
+
+    @media (max-width: 768px) {
+        .footer-link {
+            padding: 1.5rem 0;
+        }
+
+        .footer-link a {
+            font-size: 0.9rem;
+        }
+    }
+</style>
+
+<div class="footer-link">
+    <span><a href="#">© PlanIt.ma</a></span>
+</div>
+
+{% endblock content %}
